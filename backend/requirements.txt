@@ -1,0 +1,16 @@
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+pydantic>=2.7.1
+insightface>=0.7.3
+onnxruntime>=1.26.0
+Pillow>=10.3.0
+numpy>=1.26.4
+aiosqlite>=0.20.0
+python-multipart>=0.0.9
+opencv-python-headless>=4.9.0.80
+python-jose[cryptography]>=3.3.0
+cryptography>=41.0.0
+slowapi>=0.1.9
+requests>=2.31.0
+pycryptodome>=3.18.0
+pydantic-settings>=2.0.0

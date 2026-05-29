@@ -1,0 +1,238 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   antigravity-sdk.css – Scoped CSS for the Embeddable KYC Plugin
+   All styles are wrapped under .ag-shield-container to prevent host app bleed.
+───────────────────────────────────────────────────────────────────────────── */
+
+.ag-shield-container {
+  /* Internal Variables */
+  --ag-bg:           #07071a;
+  --ag-bg-2:         #0d0d24;
+  --ag-border:       rgba(255,255,255,0.08);
+  --ag-border-hi:    rgba(255,255,255,0.14);
+
+  --ag-primary:      #6366f1;
+  --ag-primary-dark: #4f46e5;
+  --ag-primary-glow: rgba(99,102,241,0.35);
+  --ag-success:      #22c55e;
+  --ag-success-glow: rgba(34,197,94,0.30);
+  --ag-error:        #ef4444;
+  --ag-warning:      #f59e0b;
+
+  --ag-text-1: #f1f5f9;
+  --ag-text-2: #94a3b8;
+  --ag-text-3: #64748b;
+
+  --ag-radius-sm: 8px;
+  --ag-radius:    14px;
+  --ag-radius-lg: 22px;
+
+  --ag-glass: rgba(255,255,255,0.04);
+  --ag-glass-border: rgba(255,255,255,0.09);
+
+  font-family: "Inter", system-ui, sans-serif;
+  color: var(--ag-text-1);
+  box-sizing: border-box;
+}
+
+.ag-shield-container * {
+  box-sizing: border-box;
+}
+
+/* ── Card Container ──────────────────────────────────────────────────────── */
+.ag-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--ag-bg);
+  border: 1px solid var(--ag-glass-border);
+  border-radius: var(--ag-radius-lg);
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.ag-header {
+  padding: 16px 20px;
+  background: rgba(7,7,26,0.95);
+  border-bottom: 1px solid var(--ag-border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ag-header-icon {
+  width: 24px;
+  height: 24px;
+  fill: var(--ag-primary);
+  filter: drop-shadow(0 0 6px var(--ag-primary-glow));
+}
+.ag-header-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* ── Panels ──────────────────────────────────────────────────────────────── */
+.ag-panel {
+  display: none;
+  padding: 30px 24px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.ag-panel.ag-active {
+  display: flex;
+  animation: ag-fade-in 0.4s ease;
+}
+
+@keyframes ag-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Typography ──────────────────────────────────────────────────────────── */
+.ag-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--ag-text-1);
+}
+.ag-subtitle {
+  font-size: 13px;
+  color: var(--ag-text-2);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+/* ── Video / Camera ──────────────────────────────────────────────────────── */
+.ag-video-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: #000;
+  border-radius: var(--ag-radius);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.ag-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+.ag-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.ag-oval-ring {
+  stroke: var(--ag-primary);
+  transition: stroke 0.3s ease;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.ag-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--ag-radius);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: all 0.3s ease;
+}
+.ag-btn-primary {
+  background: linear-gradient(135deg, var(--ag-primary) 0%, var(--ag-primary-dark) 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px var(--ag-primary-glow);
+}
+.ag-btn-primary:hover {
+  box-shadow: 0 6px 20px var(--ag-primary-glow);
+  transform: translateY(-1px);
+}
+.ag-btn-secondary {
+  background: rgba(255,255,255,0.05);
+  color: var(--ag-text-2);
+  border: 1px solid var(--ag-border-hi);
+  margin-top: 12px;
+}
+.ag-btn-secondary:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--ag-text-1);
+}
+
+/* ── Status / Liveness UI ────────────────────────────────────────────────── */
+.ag-status {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 99px;
+  background: rgba(99,102,241,0.15);
+  color: var(--ag-primary);
+  margin-bottom: 16px;
+}
+.ag-status.ag-success {
+  background: rgba(34,197,94,0.15);
+  color: var(--ag-success);
+}
+
+/* Challenge floating box */
+.ag-challenge-box {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(7,7,26,0.85);
+  backdrop-filter: blur(8px);
+  padding: 10px 16px;
+  border-radius: var(--ag-radius);
+  border: 1px solid var(--ag-border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10;
+  white-space: nowrap;
+}
+.ag-challenge-emoji { font-size: 24px; }
+.ag-challenge-text { text-align: left; }
+.ag-challenge-action { font-size: 14px; font-weight: 700; color: #fff; }
+.ag-challenge-hint { font-size: 11px; color: var(--ag-text-2); }
+
+/* Progress bar */
+.ag-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 99px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.ag-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--ag-primary);
+  border-radius: 99px;
+  transition: width 0.1s linear, background 0.3s;
+}
+
+/* ── Result icons ────────────────────────────────────────────────────────── */
+.ag-spinner {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid rgba(99,102,241,0.2);
+  border-top-color: var(--ag-primary);
+  animation: ag-spin 0.8s linear infinite;
+  margin-bottom: 20px;
+}
+@keyframes ag-spin { to { transform: rotate(360deg); } }
+
+.ag-icon-success { width: 64px; height: 64px; margin-bottom: 20px; }

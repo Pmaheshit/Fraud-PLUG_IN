@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mock Transport App — Registration Flow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* ─────────────────────────────────────────────────────────────────
+       HOST APP STYLES
+       This simulates a completely separate app (e.g. a RideShare app).
+       Notice how we use a light, generic theme here to prove the SDK
+       maintains its own scoped premium styling.
+    ───────────────────────────────────────────────────────────────── */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .app-header {
+      width: 100%;
+      background: #ffffff;
+      padding: 16px 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .app-logo {
+      width: 32px;
+      height: 32px;
+      background: #e11d48;
+      border-radius: 8px;
+      display: inline-block;
+    }
+    .app-content {
+      max-width: 600px;
+      width: 100%;
+      padding: 40px 20px;
+    }
+    .signup-form {
+      background: #fff;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      margin-bottom: 24px;
+    }
+    .form-row { margin-bottom: 16px; }
+    .form-row label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 500; }
+    .form-row input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+    .btn-host {
+      background: #111;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+    }
+    
+    /* This is where the Antigravity SDK will mount */
+    #kyc-mount-point {
+      margin-top: 30px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="app-logo"></div>
+    RideHailing Co.
+  </header>
+
+  <main class="app-content">
+    
+    <div class="signup-form" id="signup-card">
+      <h2 style="margin-top: 0">Become a Driver</h2>
+      <p style="color: #666; font-size: 14px;">Please fill out your details to begin.</p>
+      
+      <div class="form-row">
+        <label>Full Name</label>
+        <input type="text" placeholder="Jane Doe" id="host-name" value="Jane Doe">
+      </div>
+      <div class="form-row">
+        <label>Driver ID Number</label>
+        <input type="text" placeholder="D-XXXXX" id="host-driver-id" value="DRV-99921">
+      </div>
+      
+      <button class="btn-host" id="btn-next">Next: Verify Identity</button>
+    </div>
+
+    <!-- The empty div our SDK will inject into -->
+    <div id="kyc-mount-point"></div>
+
+  </main>
+
+  <!-- 1. Include the Antigravity SDK -->
+  <script src="js/antigravity-sdk.js"></script>
+
+  <!-- 2. Host App Logic -->
+  <script>
+    document.getElementById('btn-next').addEventListener('click', () => {
+      const driverId = document.getElementById('host-driver-id').value;
+      
+      // Hide the host signup form
+      document.getElementById('signup-card').style.display = 'none';
+
+      // Mount the Antigravity SDK into the mount point
+      AntigravityShield.mount({
+        containerId: "kyc-mount-point",
+        driverId: driverId,
+        onSuccess: (result) => {
+          // The SDK returns control back to the host app!
+          console.log("SDK Success Payload:", result);
+          
+          alert(
+            "Host App Received Callback!\n" +
+            "Verification Token: " + result.verification_token + "\n" +
+            "Driver ID: " + result.driver_id
+          );
+          
+          // Normally the host app would now submit this token to its own backend
+          // e.g. POST /api/rideshare/complete-signup { token: result.verification_token }
+        },
+        onError: (err) => {
+          console.error("SDK Error:", err);
+          alert("Host App Error handler triggered: " + err.message);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
