@@ -8,7 +8,7 @@
 ## Project Structure
 
 ```
-antigravity-fraud-plugin/
+fraud-plugin/
 ├── backend/
 │   ├── main.py                  # FastAPI app entrypoint
 │   ├── config.py                # Centralised constants (DB path, model name)
